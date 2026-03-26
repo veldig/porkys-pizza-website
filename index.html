@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Porky's Pizza Plus – Indianapolis, IN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ===================== RESET & VARIABLES ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:       #D4257C;
+      --pink-dark:  #A81B61;
+      --pink-light: #FDE8F3;
+      --pink-bg:    #FFF0F8;
+      --black:      #111111;
+      --white:      #FFFFFF;
+      --yellow:     #FFD84D;
+      --gray:       #F7F7F7;
+      --border:     #EECCE0;
+      --radius:     14px;
+      --shadow:     0 4px 24px rgba(212,37,124,0.13);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', 'Segoe UI', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===================== NAV ===================== */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    .nav-brand {
+      font-family: 'Bangers', cursive;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      color: var(--pink);
+    }
+    .nav-brand span { color: var(--yellow); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #ccc;
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--pink); }
+
+    .nav-order {
+      background: var(--pink);
+      color: var(--white) !important;
+      padding: 0.4rem 1.1rem;
+      border-radius: 50px;
+      transition: background 0.2s !important;
+    }
+    .nav-order:hover { background: var(--pink-dark) !important; color: var(--white) !important; }
+
+    /* ===================== HERO ===================== */
+    .hero {
+      background: var(--black);
+      position: relative;
+      overflow: hidden;
+      padding: 4rem 2rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Decorative dots background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(212,37,124,0.18) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .hero-logo {
+      position: relative;
+      z-index: 1;
+      width: 200px;
+      height: auto;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      font-family: 'Bangers', cursive;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      letter-spacing: 4px;
+      color: var(--pink);
+      line-height: 1;
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.4);
+    }
+    .hero h1 span { color: var(--yellow); }
+
+    .hero-sub {
+      position: relative;
+      z-index: 1;
+      font-size: 1.1rem;
+      color: #ccc;
+      margin: 0.6rem 0 1.8rem;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border-radius: 50px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      text-decoration: none;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+
+    .btn-primary {
+      background: var(--pink);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: var(--pink-dark); }
+
+    .btn-secondary {
+      background: var(--yellow);
+      color: var(--black);
+    }
+
+    .hero-note {
+      position: relative;
+      z-index: 1;
+      margin-top: 1.4rem;
+      color: #888;
+      font-size: 0.85rem;
+    }
+
+    /* ===================== SECTION SHARED ===================== */
+    section { padding: 4rem 1.5rem; }
+
+    .section-label {
+      text-align: center;
+      font-family: 'Bangers', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      letter-spacing: 3px;
+      color: var(--pink);
+      margin-bottom: 0.3rem;
+    }
+    .section-divider {
+      width: 60px;
+      height: 4px;
+      background: var(--pink);
+      border-radius: 2px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ===================== BADGE STRIP ===================== */
+    .badge-strip {
+      background: var(--pink);
+      color: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.5rem;
+      padding: 0.9rem 1.5rem;
+      flex-wrap: wrap;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+    .badge-strip span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .badge-strip svg { flex-shrink: 0; }
+
+    /* ===================== SPECIALS ===================== */
+    #specials { background: var(--pink-bg); }
+
+    .specials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.4rem;
+    }
+
+    .special-card {
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .special-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(212,37,124,0.2); }
+
+    .special-tag {
+      font-family: 'Bangers', cursive;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: var(--pink);
+      text-transform: uppercase;
+    }
+
+    .special-name {
+      font-family: 'Bangers', cursive;
+      font-size: 1.5rem;
+      letter-spacing: 1.5px;
+      color: var(--black);
+      line-height: 1.1;
+    }
+
+    .special-items {
+      color: #555;
+      font-size: 0.92rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .special-price {
+      font-family: 'Bangers', cursive;
+      font-size: 2.4rem;
+      color: var(--pink);
+      letter-spacing: 1px;
+      line-height: 1;
+      margin-top: 0.3rem;
+    }
+
+    .special-note {
+      font-size: 0.78rem;
+      color: #999;
+      font-style: italic;
+    }
+
+    /* ===================== MENU ===================== */
+    #menu { background: var(--white); }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .menu-category {
+      background: var(--gray);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      border: 1.5px solid var(--border);
+    }
+
+    .menu-cat-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .menu-cat-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--pink);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .menu-cat-name {
+      font-family: 'Bangers', cursive;
+      font-size: 1.2rem;
+      letter-spacing: 1.5px;
+      color: var(--black);
+    }
+
+    .menu-items-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .menu-items-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #444;
+      padding-bottom: 0.3rem;
+      border-bottom: 1px dashed var(--border);
+    }
+    .menu-items-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .menu-price {
+      color: var(--pink-dark);
+      font-weight: 800;
+      font-size: 0.85rem;
+      white-space: nowrap;
+      margin-left: 0.5rem;
+    }
+
+    .menu-note {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* ===================== PIZZA SIZES TABLE ===================== */
+    .pizza-sizes {
+      background: var(--pink-bg);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1.5px solid var(--border);
+      overflow-x: auto;
+    }
+
+    .pizza-sizes h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      color: var(--pink);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .pizza-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .pizza-table th {
+      background: var(--pink);
+      color: var(--white);
+      padding: 0.5rem 0.8rem;
+      text-align: left;
+      font-weight: 800;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .pizza-table th:first-child { border-radius: 6px 0 0 6px; }
+    .pizza-table th:last-child  { border-radius: 0 6px 6px 0; }
+
+    .pizza-table td {
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      color: #444;
+    }
+    .pizza-table tr:last-child td { border-bottom: none; }
+    .pizza-table tr:nth-child(even) td { background: rgba(212,37,124,0.04); }
+    .pizza-table td:not(:first-child) {
+      color: var(--pink-dark);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .pizza-topping-note {
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* ===================== HOURS & LOCATION ===================== */
+    #location { background: var(--black); color: var(--white); }
+    #location .section-label { color: var(--pink); }
+    #location .section-divider { background: var(--yellow); }
+
+    .location-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .location-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    .hours-card h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+    }
+
+    .hours-table { width: 100%; border-collapse: collapse; }
+    .hours-table tr td {
+      padding: 0.45rem 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #ddd;
+    }
+    .hours-table tr:last-child td { border-bottom: none; }
+    .hours-table td:first-child { color: #fff; font-weight: 700; width: 130px; }
+    .hours-table td:last-child { text-align: right; }
+    .hours-table .today td { color: var(--yellow) !important; }
+
+    .hours-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: #888;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .contact-card h3 {
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+      color: #ddd;
+      font-weight: 600;
+    }
+
+    .contact-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--pink);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-item a { color: #ddd; transition: color 0.2s; }
+    .contact-item a:hover { color: var(--pink); }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      background: var(--pink);
+      color: var(--white);
+      font-weight: 800;
+      padding: 0.7rem 1.4rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .map-link:hover { background: var(--pink-dark); }
+
+    /* ===================== FOOTER ===================== */
+    footer {
+      background: #0a0a0a;
+      color: #666;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.82rem;
+    }
+    footer strong { color: var(--pink); }
+    footer .footer-logo {
+      font-family: 'Bangers', cursive;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--pink);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ===================== MOBILE ===================== */
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links li:not(:last-child) { display: none; }
+      .hero { padding: 3rem 1rem 2.5rem; }
+      .hero-logo { width: 160px; }
+      section { padding: 3rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav>
+  <div class="nav-brand">PORKY'S <span>PIZZA</span> PLUS</div>
+  <ul class="nav-links">
+    <li><a href="#specials">Specials</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#location">Hours</a></li>
+    <li><a href="https://porkypizzaplus.hungerrush.com" target="_blank" rel="noopener" class="nav-order">Order Online</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero">
+
+  <img class="hero-logo" src="logo.png" alt="Porky's Pizza Plus logo" />
+
+  <h1>PORKY'S <span>PIZZA</span> PLUS</h1>
+  <!-- EDIT: tagline -->
+  <p class="hero-sub">Family Owned &amp; Operated Since 2005 &nbsp;·&nbsp; Indianapolis, IN</p>
+
+  <div class="hero-actions">
+    <a href="https://porkypizzaplus.hungerrush.com" target="_blank" rel="noopener" class="btn btn-primary">
+      <!-- pizza icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/></svg>
+      Order Online
+    </a>
+    <a href="tel:+13177869434" class="btn btn-secondary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (317) 786-9434
+    </a>
+  </div>
+
+  <p class="hero-note">Open 7 Days a Week · Dine-In, Carry-Out &amp; Delivery Available</p>
+</section>
+
+<!-- ============================================================
+     BADGE STRIP
+     ============================================================ -->
+<div class="badge-strip">
+  <span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Family Owned Since 2005
+  </span>
+  <span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Open 7 Days a Week
+  </span>
+  <span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+    Delivery Available
+  </span>
+  <span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+    Indianapolis, IN
+  </span>
+</div>
+
+<!-- ============================================================
+     SPECIALS
+     ============================================================ -->
+<section id="specials">
+  <div class="container">
+    <p class="section-label">TODAY'S SPECIALS</p>
+    <div class="section-divider"></div>
+
+    <div class="specials-grid">
+
+      <!-- EDIT: specials — update name, items, price, note as needed -->
+
+      <div class="special-card">
+        <span class="special-tag">★ Best Value</span>
+        <div class="special-name">Family Special</div>
+        <div class="special-items">Large 1-Topping Pizza<br>+ Large Breadstick<br>+ 2-Liter Soda</div>
+        <div class="special-price">$20.99</div>
+        <div class="special-note">Extra Toppings: $2.00 each · No 2-Liter: $18.99</div>
+      </div>
+
+      <div class="special-card">
+        <span class="special-tag">🐷 Porky's Pick</span>
+        <div class="special-name">Porky's Special</div>
+        <div class="special-items">Small 2-Topping Pizza<br>+ Small Breadstick<br>+ (2) Cans of Soda</div>
+        <div class="special-price">$14.49</div>
+        <div class="special-note">Extra Toppings: $1.50 each</div>
+      </div>
+
+      <div class="special-card">
+        <span class="special-tag">🚗 Carry-Out</span>
+        <div class="special-name">Carry-Out Special</div>
+        <div class="special-items">Large 1-Topping Pizza<br>+ 2-Liter Soda</div>
+        <div class="special-price">$13.99</div>
+        <div class="special-note">Extra Toppings: $2.00 each · No 2-Liter: $11.99</div>
+      </div>
+
+      <div class="special-card">
+        <span class="special-tag">🍕🍕 Two Pizzas</span>
+        <div class="special-name">2-Pizza Special</div>
+        <div class="special-items">(2) Large 1-Topping Pizzas — <strong>$23.99</strong><br>— OR —<br>(2) Medium 1-Topping Pizzas — <strong>$19.99</strong></div>
+        <div class="special-price" style="font-size:1.6rem">From $19.99</div>
+        <div class="special-note">Extra Toppings: Lrg $2.00 each / Med $1.75 each</div>
+      </div>
+
+      <div class="special-card">
+        <span class="special-tag">🏈 Game Day</span>
+        <div class="special-name">Sport's Special</div>
+        <div class="special-items">Large 2-Topping Pizza<br>+ Large Breadstick<br>+ Small Wing<br>+ 2-Liter Soda</div>
+        <div class="special-price">$27.99</div>
+        <div class="special-note">Extra Toppings: $3.00 each · No 2-Liter: $25.99</div>
+      </div>
+
+      <div class="special-card">
+        <span class="special-tag">🥖 Sandwich Lovers</span>
+        <div class="special-name">Sandwich Special</div>
+        <div class="special-items">Any (2) Sandwiches<br>+ Family Size Fries</div>
+        <div class="special-price">$17.99</div>
+        <div class="special-note">Deluxe: $1.25 each</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MENU
+     ============================================================ -->
+<section id="menu">
+  <div class="container">
+    <p class="section-label">OUR MENU</p>
+    <div class="section-divider"></div>
+
+    <!-- ── PIZZA ── -->
+    <div class="pizza-sizes">
+      <h3>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--pink)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/></svg>
+        Pizza Prices
+      </h3>
+      <table class="pizza-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>12" Small</th>
+            <th>14" Medium</th>
+            <th>16" Large</th>
+            <th>7" Personal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cheese</td><td>$7.99</td><td>$9.99</td><td>$11.99</td><td>$4.10</td></tr>
+          <tr><td>1–2 Toppings</td><td>$10.49</td><td>$12.99</td><td>$14.99</td><td>+$0.60/topping</td></tr>
+          <tr><td>3–4 Toppings</td><td>$11.99</td><td>$14.99</td><td>$16.99</td><td>—</td></tr>
+          <tr><td>5–6 Toppings</td><td>$14.29</td><td>$16.99</td><td>$18.99</td><td>—</td></tr>
+          <tr><td>7–8 Toppings</td><td>$15.99</td><td>$18.99</td><td>$20.99</td><td>—</td></tr>
+          <tr><td>9–10 Toppings</td><td>$17.99</td><td>$20.99</td><td>$22.99</td><td>—</td></tr>
+          <tr><td>11–12 Toppings</td><td>$18.99</td><td>$22.99</td><td>$24.99</td><td>—</td></tr>
+          <tr><td>Meat Lovers</td><td>$16.29</td><td>$19.99</td><td>$22.99</td><td>—</td></tr>
+          <tr><td>Deluxe</td><td>$14.29</td><td>$16.99</td><td>$18.99</td><td>—</td></tr>
+          <tr><td>Veggie</td><td>$14.29</td><td>$16.99</td><td>$18.99</td><td>—</td></tr>
+          <tr><td>Around the World</td><td>$18.39</td><td>$23.99</td><td>$25.99</td><td>—</td></tr>
+          <tr style="background:rgba(212,37,124,0.08)"><td><strong>Extra Cheese</strong></td><td>+$2.00</td><td>+$2.29</td><td>+$2.49</td><td>+$1.00</td></tr>
+        </tbody>
+      </table>
+      <p class="pizza-topping-note">
+        ★ NEW — Thin Thin Crust: +$1.00 (available on 14" only)<br>
+        Available toppings: Pepperoni · Sausage · Italian Sausage · Ham · Beef · Bacon · Banana Peppers · Tomato · Mushrooms · Jalapeño · Black Olives · Green Olives · Pineapple · Onions · Extra Sauce<br>
+        Menu prices &amp; items are subject to change.
+      </p>
+    </div>
+
+    <!-- ── MENU GRID ── -->
+    <div class="menu-grid">
+
+      <!-- Breadsticks -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🥖</div>
+          <div class="menu-cat-name">Breadsticks</div>
+        </div>
+        <ul class="menu-items-list">
+          <li>Small (4 pc) <span class="menu-price">$3.59</span></li>
+          <li>Large (7 pc) <span class="menu-price">$5.39</span></li>
+          <li>Stuffed (4 pc) <span class="menu-price">$5.49</span></li>
+          <li>Party (30 pc) <span class="menu-price">$26.99</span></li>
+        </ul>
+      </div>
+
+      <!-- Chicken Wings -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🍗</div>
+          <div class="menu-cat-name">Chicken Wings</div>
+        </div>
+        <ul class="menu-items-list">
+          <li><em style="color:#999;font-size:.8rem">Hot · Plain · BBQ</em></li>
+          <li>Small (6 pc) <span class="menu-price">$5.99</span></li>
+          <li>Large (10 pc) <span class="menu-price">$8.99</span></li>
+          <li>Snack Pack <span class="menu-price">$12.99</span></li>
+          <li style="font-size:.78rem;color:#888;border:none">Wings, Strips, Fried Mushrooms, Jalapeño Poppers, Cheese Sticks &amp; Fries</li>
+        </ul>
+      </div>
+
+      <!-- Chicken Strip Dinner -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🍽️</div>
+          <div class="menu-cat-name">Chicken Strip Dinner</div>
+        </div>
+        <ul class="menu-items-list">
+          <li>Individual (with chips) <span class="menu-price">$7.99</span></li>
+          <li>Basket (½ fries &amp; chips) <span class="menu-price">$9.49</span></li>
+          <li>Deluxe upgrade <span class="menu-price">+$1.25</span></li>
+          <li style="font-size:.78rem;color:#888;border:none">+Lettuce, Tomato, Onion &amp; Pickle</li>
+        </ul>
+      </div>
+
+      <!-- Sandwiches -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🥪</div>
+          <div class="menu-cat-name">Sandwiches</div>
+        </div>
+        <ul class="menu-items-list">
+          <li>Individual (w/ chips) <span class="menu-price">$7.99</span></li>
+          <li>Basket (½ fries &amp; chips) <span class="menu-price">$9.49</span></li>
+          <li>Deluxe upgrade <span class="menu-price">+$1.25</span></li>
+          <li style="border-top:1px solid var(--border);margin-top:.4rem;padding-top:.4rem;color:#555;font-size:.85rem;border-bottom:none">Beef Stromboli · Cheeseburger · Ham &amp; Cheese · Italian Chicken · Italian Sausage · Meatball Sub · Pizza Stromboli · Tenderloin</li>
+        </ul>
+      </div>
+
+      <!-- Kid's Meals -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🧒</div>
+          <div class="menu-cat-name">Kid's Meals</div>
+        </div>
+        <ul class="menu-items-list">
+          <li><em style="color:#999;font-size:.8rem">With Chips &amp; Candy Pack</em></li>
+          <li>Corn Dog <span class="menu-price">$2.99</span></li>
+          <li>Chicken Strips <span class="menu-price">$3.99</span></li>
+          <li>Mini Taco <span class="menu-price">$3.99</span></li>
+        </ul>
+      </div>
+
+      <!-- Salads -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🥗</div>
+          <div class="menu-cat-name">Salads</div>
+        </div>
+        <ul class="menu-items-list">
+          <li>Garden Salad <span class="menu-price">$4.00</span></li>
+          <li>Ham &amp; Cheese <span class="menu-price">$2.65</span></li>
+          <li>Chef Salad <span class="menu-price">$7.99</span></li>
+          <li>Add Chicken <span class="menu-price">+$2.25</span></li>
+        </ul>
+      </div>
+
+      <!-- Porky's Favorites -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🍟</div>
+          <div class="menu-cat-name">Porky's Favorites</div>
+        </div>
+        <ul class="menu-items-list">
+          <li>French Fries <span class="menu-price">$3.00</span></li>
+          <li>Bacon Cheese Fries <span class="menu-price">$6.00</span></li>
+          <li>Jalapeño Cheese Fries <span class="menu-price">$4.60</span></li>
+          <li>Cheese Sticks <span class="menu-price">$4.60</span></li>
+          <li>Fried Mushrooms <span class="menu-price">$4.60</span></li>
+          <li>Garlic Bread <span class="menu-price">$2.99</span></li>
+          <li>Garlic Cheese Bread <span class="menu-price">$4.49</span></li>
+          <li>Big Pickle <span class="menu-price">$1.25</span></li>
+        </ul>
+      </div>
+
+      <!-- Desserts -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🍰</div>
+          <div class="menu-cat-name">Desserts</div>
+        </div>
+        <ul class="menu-items-list">
+          <li>Cheesecake — Plain <span class="menu-price">$2.75</span></li>
+          <li>Cheesecake — Strawberry <span class="menu-price">$3.50</span></li>
+          <li>Cheesecake — Caramel <span class="menu-price">$3.50</span></li>
+        </ul>
+      </div>
+
+      <!-- Beverages -->
+      <div class="menu-category">
+        <div class="menu-cat-header">
+          <div class="menu-cat-icon">🥤</div>
+          <div class="menu-cat-name">Beverages</div>
+        </div>
+        <ul class="menu-items-list">
+          <li>2-Liter <span class="menu-price">$3.29</span></li>
+          <li>Can <span class="menu-price">$1.25</span></li>
+          <li>Bottled Water <span class="menu-price">$1.00</span></li>
+          <li style="font-size:.78rem;color:#888;border:none">Pepsi · Diet Pepsi · Mt. Dew · Diet Mt. Dew · Sunkist Orange · Dr. Pepper · Sprite · Root Beer</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="menu-note">Extra sauces &amp; dressings $1.29 each (Italian, French, Ranch) · We do not accept checks · All major credit cards accepted · Menu prices &amp; items are subject to change.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     HOURS & LOCATION
+     ============================================================ -->
+<section id="location">
+  <div class="container">
+    <p class="section-label">HOURS &amp; LOCATION</p>
+    <div class="section-divider"></div>
+
+    <div class="location-grid">
+
+      <!-- EDIT: hours -->
+      <div class="hours-card">
+        <h3>Hours of Operation</h3>
+        <table class="hours-table">
+          <tbody>
+            <tr><td>Monday</td><td>4:00 PM – 10:00 PM</td></tr>
+            <tr><td>Tuesday</td><td>4:00 PM – 10:00 PM</td></tr>
+            <tr><td>Wednesday</td><td>4:00 PM – 10:00 PM</td></tr>
+            <tr><td>Thursday</td><td>4:00 PM – 10:00 PM</td></tr>
+            <tr><td>Friday</td><td>4:00 PM – 11:00 PM</td></tr>
+            <tr><td>Saturday</td><td>4:00 PM – 11:00 PM</td></tr>
+            <tr><td>Sunday</td><td>4:00 PM – 10:00 PM</td></tr>
+          </tbody>
+        </table>
+        <p class="hours-note">
+          Closed Easter Sunday.<br>
+          Delivery &amp; fryer orders not accepted within 15 minutes of closing.<br>
+          Delivery fee may apply. We do not deliver to apartments.
+        </p>
+      </div>
+
+      <!-- EDIT: address / phone / social -->
+      <div class="contact-card">
+        <h3>Find Us</h3>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            2236 Shelby St<br>
+            Indianapolis, IN
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <a href="tel:+13177869434">(317) 786-9434</a>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/></svg>
+          </div>
+          <a href="https://porkypizzaplus.hungerrush.com" target="_blank" rel="noopener">porkypizzaplus.hungerrush.com</a>
+        </div>
+
+        <a href="https://maps.google.com/?q=2236+Shelby+St+Indianapolis+IN" target="_blank" rel="noopener" class="map-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Get Directions
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  <div class="footer-logo">PORKY'S PIZZA PLUS</div>
+  <p>2236 Shelby St, Indianapolis, IN &nbsp;·&nbsp; <a href="tel:+13177869434" style="color:var(--pink)">(317) 786-9434</a></p>
+  <p style="margin-top:0.4rem">Family Owned &amp; Operated Since 2005 &nbsp;·&nbsp; Open 7 Days a Week</p>
+  <p style="margin-top:1rem; font-size:0.75rem; color:#444">Menu prices &amp; items are subject to change.</p>
+</footer>
+
+<!-- Highlight today's hours with JS -->
+<script>
+  (function () {
+    const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const today = days[new Date().getDay()];
+    const rows = document.querySelectorAll('.hours-table tbody tr');
+    rows.forEach(row => {
+      if (row.cells[0] && row.cells[0].textContent.trim() === today) {
+        row.classList.add('today');
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

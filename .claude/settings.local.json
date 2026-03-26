@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.facebook.com)",
+      "WebFetch(domain:porkypizzaplus.hungerrush.com)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(whois porkyspizzaplus.com)"
+    ]
+  }
+}
